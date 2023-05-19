@@ -1,31 +1,30 @@
-export let bookArray = [];
-export const EVENT_CUSTOM = "render-books";
-export const DATA_BUKU = "data_buku";
-export const SAVED_BOOK = "saved_buku";
-export const LOAD_BOOK = "load_buku";
-export const incompleteBookshelfList = document.getElementById(
+let bookArray = [];
+const EVENT_CUSTOM = "render-books";
+const DATA_BUKU = "data_buku";
+const SAVED_BOOK = "saved_buku";
+const LOAD_BOOK = "load_buku";
+const incompleteBookshelfList = document.getElementById(
   "incompleteBookshelfList"
 );
-export const completeBookshelfList = document.getElementById("completeBookshelfList");
-export const title = document.getElementById("inputBookTitle");
-export const author = document.getElementById("inputBookAuthor");
-export const year = document.getElementById("inputBookYear");
-export const checked = document.getElementById("inputBookIsComplete");
-export const addBookButton = document.getElementById("addBookButton");
-export const formInputSection = document.getElementById("formInputSection");
-export const search = document.getElementById("searchBook");
-export const simpanBuku = document.getElementById("inputBook");
+const completeBookshelfList = document.getElementById("completeBookshelfList");
+const title = document.getElementById("inputBookTitle");
+const author = document.getElementById("inputBookAuthor");
+const year = document.getElementById("inputBookYear");
+const checked = document.getElementById("inputBookIsComplete");
+const addBookButton = document.getElementById("addBookButton");
+const formInputSection = document.getElementById("formInputSection");
+const search = document.getElementById("searchBook");
+const simpanBuku = document.getElementById("inputBook");
 
-
-export function showFormInput() {
+function showFormInput() {
   formInputSection.classList.remove("hidden");
 }
 
-export function generateBookId() {
+function generateBookId() {
   return +new Date();
 }
 
-export function bookObject(id, title, author, year, isCompleted) {
+function bookObject(id, title, author, year, isCompleted) {
   return {
     id,
     title,
@@ -35,36 +34,36 @@ export function bookObject(id, title, author, year, isCompleted) {
   };
 }
 
-export function keyUpHandler(e) {
+function keyUpHandler(e) {
   e.preventDefault();
   cariBuku();
 }
-export function searchButtonHandler(e) {
+function searchButtonHandler(e) {
   e.preventDefault();
   cariBuku();
 }
 
-export function inputBookHandler(e) {
+function inputBookHandler(e) {
   e.preventDefault();
   addNewBook();
   simpanBuku.reset();
 }
 
-export function submitBookHandler() {
+function submitBookHandler() {
   if (checkStorage()) {
     loadDataFromStorage();
   }
 }
 
-export function refreshed() {
+function refreshed() {
   refreshDataFromBooks();
 }
 
-export function closeForm() {
+function closeForm() {
   formInputSection.classList.add("hidden");
 }
 
-export function addNewBook() {
+function addNewBook() {
   const titles = title.value;
   const authors = author.value;
   const years = Number(year.value);
@@ -85,7 +84,7 @@ export function addNewBook() {
   updateDataToStorage();
 }
 
-export function makeNewBook(object) {
+function makeNewBook(object) {
   const { id, title, author, year, isCompleted } = object;
 
   const buatJudul = document.createElement("h3");
@@ -103,7 +102,7 @@ export function makeNewBook(object) {
   const redBtn = document.createElement("button");
   redBtn.classList.add("deleteBtn");
   redBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
-  redBtn.addEventListener("click", function() {
+  redBtn.addEventListener("click", function () {
     deleteBookHandler(id);
   });
 
@@ -118,14 +117,14 @@ export function makeNewBook(object) {
   if (isCompleted) {
     greenBtn.innerHTML = '<i class="fa-solid fa-book-open"></i>';
     greenBtn.classList.add("undoneBtn");
-    greenBtn.addEventListener("click", function() {
+    greenBtn.addEventListener("click", function () {
       belumSelesai(id);
     });
     completeBookshelfList.append(article);
   } else {
     greenBtn.innerHTML = '<i class="fa-solid fa-square-check"></i>';
     greenBtn.classList.add("doneBtn");
-    greenBtn.addEventListener("click", function() {
+    greenBtn.addEventListener("click", function () {
       sudahSelesai(id);
     });
     incompleteBookshelfList.append(article);
@@ -142,7 +141,7 @@ function findIndexBuku(idBuku) {
   }
   return -1;
 }
- 
+
 function findBook(idBuku) {
   for (const bookItem of bookArray) {
     if (bookItem.id === idBuku) {
@@ -151,7 +150,7 @@ function findBook(idBuku) {
   }
   return null;
 }
- 
+
 function belumSelesai(idBuku) {
   const bukuTarget = findBook(idBuku);
   if (bukuTarget == null) return;
@@ -159,7 +158,7 @@ function belumSelesai(idBuku) {
   document.dispatchEvent(new Event(EVENT_CUSTOM));
   updateDataToStorage();
 }
- 
+
 function deleteBookHandler(idBuku) {
   const bukuTarget = findIndexBuku(idBuku);
   if (bukuTarget === -1) return;
@@ -167,7 +166,7 @@ function deleteBookHandler(idBuku) {
   document.dispatchEvent(new Event(EVENT_CUSTOM));
   updateDataToStorage();
 }
- 
+
 function sudahSelesai(idBuku) {
   const bukuTarget = findBook(idBuku);
   if (bukuTarget == null) {
@@ -177,7 +176,7 @@ function sudahSelesai(idBuku) {
   document.dispatchEvent(new Event(EVENT_CUSTOM));
   updateDataToStorage();
 }
- 
+
 function cariBuku() {
   const bookTitle = searchBookTitle.value.toLowerCase();
   const buku = document.querySelectorAll(".book_item");
@@ -190,22 +189,22 @@ function cariBuku() {
     }
   }
 }
- 
+
 function checkStorage() {
   if (typeof Storage === undefined) {
     alert("Your Browser not support web storage");
     return false;
   }
- 
+
   return true;
 }
- 
+
 function simpanData() {
   const simpan = JSON.stringify(bookArray);
   localStorage.setItem(DATA_BUKU, simpan);
   document.dispatchEvent(new Event(SAVED_BOOK));
 }
- 
+
 function loadDataFromStorage() {
   const serializedData = localStorage.getItem(DATA_BUKU);
   let data = JSON.parse(serializedData);
@@ -214,11 +213,11 @@ function loadDataFromStorage() {
   }
   document.dispatchEvent(new Event(LOAD_BOOK));
 }
- 
+
 function updateDataToStorage() {
   if (checkStorage()) simpanData();
 }
- 
+
 function refreshDataFromBooks() {
   for (let book of bookArray) {
     const newBook = makeNewBook(book);
@@ -229,7 +228,7 @@ function refreshDataFromBooks() {
     }
   }
 }
-export function evenCustomHandlers() {
+function evenCustomHandlers() {
   incompleteBookshelfList.innerHTML = "";
   completeBookshelfList.innerHTML = "";
   for (const bookItem of bookArray) {
@@ -241,7 +240,6 @@ export function evenCustomHandlers() {
     }
   }
 }
-
 
 simpanBuku.addEventListener("submit", inputBookHandler);
 search.addEventListener("keyup", keyUpHandler);
