@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: "QuickSand", sans-serif;
+  }
+  .deleteBtn {
+    @apply px-2 py-1 text-lg font-bold text-white bg-red-500 rounded;
+  }
+  .doneBtn {
+    @apply px-2 py-1 text-lg font-bold text-white bg-green-500 rounded;
+  }
+  .undoneBtn {
+    @apply px-2 py-1 text-lg font-bold text-white bg-yellow-500 rounded;
+  }
+  .action {
+    @apply flex items-center justify-start gap-2;
+  }
+  .book_shelf {
+    @apply w-full h-auto p-4 mb-4 border-2 border-gray-300 rounded-lg;
+  }
+  .book_shelf h2 {
+    @apply text-2xl font-bold text-gray-700;
+  }
+  .book_shelf .book_list .book_item {
+    @apply w-full p-2 mb-3 bg-white border border-gray-200 rounded-lg shadow;
+  }
+  .book_shelf .book_list .book_item .book_item_title {
+    @apply text-lg font-bold text-gray-700;
+  }
+}
