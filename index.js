@@ -1,4 +1,11 @@
-import { addBookButton, search, simpanBuku, SAVED_BOOK, LOAD_BOOK, EVENT_CUSTOM } from "./scripts/constants.js";
+import {
+  addBookButton,
+  search,
+  simpanBuku,
+  SAVED_BOOK,
+  LOAD_BOOK,
+  EVENT_CUSTOM
+} from "./src/scripts/constants.js";
 import {
   inputBookHandler,
   searchButtonHandler,
@@ -8,7 +15,7 @@ import {
   refreshed,
   showFormInput,
   evenCustomHandlers
-} from "./scripts/functions.js";
+} from "./src/scripts/functions.js";
 
 
 simpanBuku.addEventListener("submit", inputBookHandler);
